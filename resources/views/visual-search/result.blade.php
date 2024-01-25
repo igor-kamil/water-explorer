@@ -3,28 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Search Results</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>Visual Search Results</title>    
 </head>
-<body>
+<body class="bg-gray-200 p-8">
 
-    <h1>Visual Search Results</h1>
+    <h1 class="text-2xl font-bold mb-4">Visual Search Results</h1>
 
-    <div>
-        <h2>Uploaded Image</h2>
-        {{-- <img src="{{ URL::to('/') }}/storage/{{ $uploadedImage->store('uploads') }}" alt="Uploaded Image" width="200"> --}}
-        <img src="data:image/jpg;base64,{!! base64_encode(file_get_contents($uploadedImage->path())) !!}" alt="Uploaded Image" width="200">
-    </div>
+    <div class="flex justify-between">
+        <div class="w-72">
+            <h2 class="text-lg font-bold mb-2">Uploaded Image</h2>
+            {{-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents($uploadedImage->path())) }}" alt="Uploaded Image"> --}}
+            <img class="w-full h-auto object-contain border border-gray-400 rounded-md" src="data:image/jpg;base64,{{ base64_encode(file_get_contents($uploadedImage->path())) }}" alt="Uploaded Image">
+        </div>
 
-    <div>
-        <h2>Similar Item</h2>
-        @if($similarItems)
-            @foreach ($similarItems as $item)
-            <img src="{{ $item->getImageRoute() }}" alt="Similar Item Image" width="200">
-            @endforeach
-        @else
-            <p>No similar item found</p>
-        @endif
+        <div class="w-72">
+            <h2 class="text-lg font-bold mb-2">Similar Item</h2>
+            @if($similarItems)
+                <img class="w-full h-auto object-contain border border-gray-400 rounded-md" src="{{ $similarItems->first()->getImageRoute() }}" alt="Similar Item Image">
+            @else
+                <p>No similar item found</p>
+            @endif
+        </div>
     </div>
 
 </body>
+
 </html>
