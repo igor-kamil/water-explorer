@@ -21,11 +21,11 @@ class VisualSearchController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        try {
+        // try {
             $weaviate = new Weaviate(config('services.weaviate.url'), config('services.weaviate.token'));
             $imageBase64 = base64_encode(file_get_contents($request->file('image')->path()));
             // dd($imageBase64);
-            $limit = 1;
+            $limit = 5;
             // get weaviate Object ID
             $data = $weaviate->graphql()->get('{
                 Get {
@@ -44,17 +44,21 @@ class VisualSearchController extends Controller
                 }
               }');
 
-            $item_id= Arr::get($data, 'data.Get.Ornament.0.identifier');
-            $similarItem = Item::find($item_id);
+            $ids = collect(Arr::pluck(Arr::get($data, 'data.Get.Ornament') ?? [], 'identifier'));
+
+            $similarItems = Item::whereIn('id', $ids)->get();
+            $sortedItems = $similarItems->sortBy(function ($item) use ($ids) {
+                return $ids->search($item->id);
+            });
 
             return view('visual-search.result', [
                 'uploadedImage' => $request->file('image'),
-                'similarItem' => $similarItem,
+                'similarItems' => $sortedItems,
             ]);
-        } catch (Exception $e) {
-            // Handle Weaviate API errors
-            return back()->with('error', 'Error communicating with Weaviate');
-        }
+        // } catch (Exception $e) {
+        //     // Handle Weaviate API errors
+        //     return back()->with('error', 'Error communicating with Weaviate');
+        // }
 
         return 'ok';
     }

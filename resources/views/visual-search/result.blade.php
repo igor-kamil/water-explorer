@@ -17,9 +17,10 @@
 
     <div>
         <h2>Similar Item</h2>
-        @if($similarItem)
-            <img src="{{ $similarItem->getImageRoute() }}" alt="Similar Item Image" width="200">
-            <!-- Display other details of the similar item -->
+        @if($similarItems)
+            @foreach ($similarItems as $item)
+            <img src="{{ $item->getImageRoute() }}" alt="Similar Item Image" width="200">
+            @endforeach
         @else
             <p>No similar item found</p>
         @endif
