@@ -8,7 +8,7 @@
 </head>
 <body class="bg-gray-200 p-8">
 
-    <form action="/visual-search" method="post" enctype="multipart/form-data" class="max-w-md mx-auto bg-white p-6">
+    <form action="/visual-search" method="post" enctype="multipart/form-data" class="max-w-md mx-auto p-6">
         @csrf
 
         <label for="image" class="block text-sm font-medium text-gray-700">Upload Image:</label>
