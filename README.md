@@ -1,8 +1,8 @@
-# MK&G Ornament Explorer
+# MK&G Water Explorer
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Allow MK&G museum visitors to explore ornamental arworks by visual similarity and metadata.
+Allow MK&G museum visitors to explore arworks related to water by visual similarity and metadata.
 
 Developed by [Igor Rjabinin](https://github.com/igor-kamil/) and [Philo van Kemenade](https://github.com/phivk/) in partnership with the [Museum für Kunst und Gewerbe Hamburg](https://www.mkg-hamburg.de/en) as part of the [NEO Collections](https://medium.com/neocollections) project.
 

@@ -72,7 +72,7 @@ class Item extends Model
         // get weaviate Object ID
         $data = $weaviate->graphql()->get('{
             Get {
-              Ornament (
+              Item (
                 limit: 1
                 where: {
                   path: ["identifier"],
@@ -90,7 +90,7 @@ class Item extends Model
           }');
           
           
-        $object_id= Arr::get($data, 'data.Get.Ornament.0._additional.id');
+        $object_id= Arr::get($data, 'data.Get.Item.0._additional.id');
 
         $exclude_query = '';
         foreach ($exclude as $exclude_id) {
@@ -117,7 +117,7 @@ class Item extends Model
         
         $data = $weaviate->graphql()->get('{
             Get {
-              Ornament (
+              Item (
                 offset: 1
                 limit: '.$limit.'
                 nearObject: {
@@ -132,7 +132,7 @@ class Item extends Model
               }
             }
           }');
-        $ids = collect(Arr::pluck(Arr::get($data, 'data.Get.Ornament') ?? [], 'identifier'));
+        $ids = collect(Arr::pluck(Arr::get($data, 'data.Get.Item') ?? [], 'identifier'));
         
         // $filteredIds = $ids->reject(function ($id) use ($exclude) {
         //     return in_array($id, $exclude);

@@ -49,7 +49,7 @@ class ImportAssets extends Command
         $filePath = $this->argument('file');
 
         // Read the CSV file using spatie/simple-excel
-        $rows = SimpleExcelReader::create($filePath)->useDelimiter(';')->getRows();
+        $rows = SimpleExcelReader::create($filePath)->getRows();
 
         $rows->each(function (array $row) {
             try {

@@ -30,7 +30,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 */
 
 Route::get('/items/', function (Request $request) {
-    $mainItem =  ($request->has('id')) ? Item::findOrFail($request->input('id')) : Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->inRandomOrder()->first();
+    $mainItem =  ($request->has('id')) ? Item::findOrFail($request->input('id')) : Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->inRandomOrder()->firstOrFail();
     $mainItem->increment('view_count');
     $similarItems = $mainItem->getVisualySimilar(2);
     $youngerItem = $mainItem->getYounger();

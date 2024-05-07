@@ -12,7 +12,7 @@ class CreateWeaviateSchema extends Command
     protected $signature = 'weaviate:create-schema';
     protected $description = 'Create Weaviate class schema';
     
-    protected $className = 'Ornament'; // define your own schema class name here
+    protected $className = 'Item'; // define your own schema class name here
 
     public function handle()
     {
