@@ -11,7 +11,14 @@ class AddDataToWeaviate extends Command
     protected $signature = 'weaviate:add-data';
     protected $description = 'Add data to Weaviate class';
 
-    protected $className = 'Ornament'; // define your own schema class name here
+    protected $className;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->className = config('services.weaviate.index');
+    }
+    
 
     /**
      * Execute the console command.
@@ -49,14 +56,14 @@ class AddDataToWeaviate extends Command
                             'class' => $this->className,
                             'properties' => [
                                 'identifier' => $item->id,
-                                'object' => $item->object,
-                                'title' => $item->title,
-                                'material' => $item->material,
-                                'technique' => $item->technique,
-                                'iconography' => $item->iconography,
-                                'style' => $item->style,
-                                'year' => $item->year,
-                                'collection' => $item->collection,
+                                // 'object' => $item->object,
+                                // 'title' => $item->title,
+                                // 'material' => $item->material,
+                                // 'technique' => $item->technique,
+                                // 'iconography' => $item->iconography,
+                                // 'style' => $item->style,
+                                // 'year' => $item->year,
+                                // 'collection' => $item->collection,
                                 'image' => $imageBase64,
                             ]
                         ];

@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Item extends Model
 {
     public $incrementing = false;
@@ -72,7 +73,7 @@ class Item extends Model
         // get weaviate Object ID
         $data = $weaviate->graphql()->get('{
             Get {
-              Item (
+              '.config('services.weaviate.index').' (
                 limit: 1
                 where: {
                   path: ["identifier"],
@@ -117,7 +118,7 @@ class Item extends Model
         
         $data = $weaviate->graphql()->get('{
             Get {
-              Item (
+              '.config('services.weaviate.index').' (
                 offset: 1
                 limit: '.$limit.'
                 nearObject: {

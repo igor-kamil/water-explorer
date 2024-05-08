@@ -10,8 +10,14 @@ class DeleteWeaviateSchema extends Command
     protected $signature = 'weaviate:delete-schema';
     protected $description = 'Delete Weaviate class schema';
 
-    protected $className = 'Ornament'; // define your own schema class name here
+    protected $className;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->className = config('services.weaviate.index');
+    }
+    
     public function handle() {
         $weaviate = new Weaviate(config('services.weaviate.url'), config('services.weaviate.token'));
 

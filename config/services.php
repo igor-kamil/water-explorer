@@ -20,6 +20,7 @@ return [
     'weaviate' => [
         'url' => env('WEAVIATE_URL', 'http://localhost:8080/v1/'),
         'token' => env('WEAVIATE_TOKEN', ''),
+        'index' => env('WEAVIATE_INDEX', 'Item'),
     ],
 
     'vimeo' => [

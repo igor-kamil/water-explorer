@@ -12,8 +12,13 @@ class CreateWeaviateSchema extends Command
     protected $signature = 'weaviate:create-schema';
     protected $description = 'Create Weaviate class schema';
     
-    protected $className = 'Item'; // define your own schema class name here
+    protected $className;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->className = config('services.weaviate.index');
+    }
     public function handle()
     {
         $weaviate = new Weaviate(config('services.weaviate.url'), config('services.weaviate.token'));
