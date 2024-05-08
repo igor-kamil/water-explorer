@@ -23,7 +23,7 @@ class ItemResource extends JsonResource
             'author' => $this->author,
             'dating' => $this->dating,
             'description' => $this->description,
-            'image_src' => $this->getImageRoute(), //$this->image_src,
+            'image_src' => $this->getImagePreview(), //$this->image_src,
             'web_url' => $this->web_url,
             'collection' => $this->collection,
             'object' => $this->object,
