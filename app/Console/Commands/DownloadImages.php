@@ -33,7 +33,7 @@ class DownloadImages extends Command
 
         foreach ($items as $item) {
             // $imageUrl = $item->getImageUrl();
-            $imageUrl = 'https://mdo.mkg-hamburg.de/MDO/mediadelivery/rendition/' . $item->asset_id . '/-FJPG-B244';
+            $imageUrl = 'https://mdo.mkg-hamburg.de/MDO/mediadelivery/rendition/' . $item->asset_id . '/-FJPG';
 
             if (!$this->isImageDownloaded($imageUrl)) {
                 if ($this->downloadImage($imageUrl, $item->id)) {
