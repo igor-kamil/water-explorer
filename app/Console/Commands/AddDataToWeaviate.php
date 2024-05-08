@@ -43,7 +43,7 @@ class AddDataToWeaviate extends Command
         $itemsQuery->chunk($chunkSize, function ($items) use ($weaviate, $progressBar) {
             $items_bulk = [];
             foreach ($items as $item) {
-                $imagePath = storage_path("app/images/{$item->id}.jpg");
+                $imagePath = storage_path("app/images_thumb/{$item->id}.jpg");
 
                 if (file_exists($imagePath)) {
                     try {
