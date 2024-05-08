@@ -45,7 +45,7 @@ class ImportUrls extends Command
         $filePath = $this->argument('file');
 
         // Read the CSV file using spatie/simple-excel
-        $rows = SimpleExcelReader::create($filePath)->getRows();
+        $rows = SimpleExcelReader::create($filePath)->useDelimiter(';')->getRows();
 
         $rows->each(function (array $row) {
             $item = Item::find(Arr::get($row, 'inventoryId'));

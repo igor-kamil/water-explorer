@@ -27,7 +27,7 @@ class ImportAssets extends Command
      *
      * @var string
      */
-    protected $description = 'Import assets from a CSV file';
+    protected $description = 'Import assets from an Excel file';
 
     /**
      * Create a new command instance.
@@ -52,13 +52,13 @@ class ImportAssets extends Command
         $rows = SimpleExcelReader::create($filePath)->getRows();
 
         $rows->each(function (array $row) {
+            // dd($row);
             try {
+                $id = Arr::get($row, 'dc_Inventarnummer');
                 if (Str::endsWith(Arr::get($row, 'Asset-Name'), '.jpg') && !Str::contains(Arr::get($row, 'Asset-Name'), '+')) {
-                    $id = Str::remove('.jpg', Arr::get($row, 'Asset-Name'));
                     Item::where('id', $id)->update(['asset_id' => Arr::get($row, 'Media Delivery Cloud Asset ID')]);
                 }
                 if ($this->option('tif') && Str::endsWith(Arr::get($row, 'Asset-Name'), '.tif') && !Str::contains(Arr::get($row, 'Asset-Name'), '+')) {
-                    $id = Str::remove('.tif', Arr::get($row, 'Asset-Name'));
                     $item = Item::whereNull('asset_id')->where('id', $id)->first();
                     if ($item) {
                         Item::where('id', $id)->update(['asset_id' => Arr::get($row, 'Media Delivery Cloud Asset ID')]);

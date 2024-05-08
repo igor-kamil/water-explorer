@@ -55,6 +55,7 @@ class GenerateTinyPlaceholders extends Command
                     $base64Svg = 'data:image/svg+xml;base64,' . base64_encode($svg);
                     // Store the tiny placeholder in your database
                     $item->update(['tiny_placeholder' => $base64Svg]);
+                    unset($sourceImage);
                 } catch (\Exception $e) {                    
                     // Log the ID with a wrong image
                     $this->error("Failed to generate a tiny placeholder for item with ID: {$item->id}");
