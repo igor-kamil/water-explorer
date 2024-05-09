@@ -1,0 +1,1 @@
+mogrify -path ./storage/app/images_thumb -background black -gravity center  -resize 244x244 ./storage/app/images/*.jpg
