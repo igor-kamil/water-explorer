@@ -4,11 +4,11 @@
         <div class="max-h-full overflow-y-auto overflow-x-hidden p-4">
             <div class="relative w-full max-w-2xl md:max-w-3xl bg-white rounded-xl">
                 <div class="px-4 py-4 md:py-6 md:px-6">
-                    <!-- <h2 class="text-xl md:text-4xl font-bold mb-4 md:mb-6">Ornament Explorer Objektschild</h2> -->
+                    <!-- <h2 class="text-xl md:text-4xl font-bold mb-4 md:mb-6">Water Explorer Objektschild</h2> -->
                     <div class="description md:text-2xl whitespace-pre-line mb-4 md:mb-6 md:pt-2">
                         <h3 class="italic mb-4">Die Sammlung mit KI entdecken</h3>
                         <p class="mb-4">
-                            Im Ornament Explorer sind über 12.000 Bilder von Objekten aus allen Sammlungen des MK&G zu
+                            Im Water Explorer sind über 12.000 Bilder von Objekten aus allen Sammlungen des MK&G zu
                             sehen. Ausgangspunkt ist ein Werk in der Mitte. Auf der horizontalen Ebene schließen sich
                             Objekte an, die mit Hilfe von Künstlicher Intelligenz (KI) basierend auf der Ähnlichkeit zum
                             mittleren Objekt ausgewählt werden. In der Vertikalen findet man Objekte, die jüngeren
@@ -20,8 +20,8 @@
                         <h3 class="italic mb-4">Bitte beachten:</h3>
                         <p class="mb-4">
                             Die Art, wie Objekte dokumentiert werden, unterliegt den sich wandelnden Bedingungen der
-                            Wissensproduktion. Der Ornament Explorer greift auf alle digitalisierten Daten und Objekte
-                            in der Sammlungsdatenbank mit Bezug zum Begriff Ornament zu. Also auch solche, die
+                            Wissensproduktion. Der Water Explorer greift auf alle digitalisierten Daten und Objekte
+                            in der Sammlungsdatenbank mit Bezug zum Begriff Water zu. Also auch solche, die
                             normalerweise nicht öffentlich zugänglich sind. Diese weisen unter Umständen nicht
                             zeitgemäße oder diskriminierungsfreie Sprache, sowie auch Fehler oder Leerstellen auf, da
                             diese noch nicht vollständig geprüft sind. <br />
@@ -35,7 +35,7 @@
 
                         <h3 class="italic mb-4">Explore the collection with the help of AI</h3>
                         <p class="mb-4">
-                            The Ornament Explorer contains more than 12,000 images of objects from all collections of
+                            The Water Explorer contains more than 12,000 images of objects from all collections of
                             the MK&G. The starting point is a work in the middle. On the horizontal level, objects are
                             added that are selected with the help of artificial intelligence (AI) based on their
                             similarity to the central object. On the vertical level, objects are found that are more
@@ -47,7 +47,7 @@
                         <h3 class="italic mb-4">Please notice:</h3>
                         <p class="mb-4">
                             The way objects are documented is subject to the changing conditions of knowledge
-                            production. Since the Ornament Explorer accesses all digitised data and objects in the
+                            production. Since the Water Explorer accesses all digitised data and objects in the
                             collection database related to the term ornament, i.e. also those that are not normally
                             publicly accessible, they may contain language that is not up-to-date or non-discriminatory,
                             as well as errors or blanks, since they have not yet been fully checked.<br />
