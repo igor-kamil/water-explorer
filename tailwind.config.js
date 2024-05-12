@@ -5,6 +5,10 @@ module.exports = {
             borderWidth: {
                 1: '1px',
             },
+            screens: {
+                'portrait': {'raw': '(orientation: portrait)'},
+                'tall': { 'raw': '(min-height: 1000px) and (orientation: portrait)' },
+            }
         },
         fontFamily: {
             sans: ['Scto Grotesk A', 'sans-serif'],

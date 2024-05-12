@@ -2,18 +2,18 @@
     <div class="fixed inset-0 z-50 flex justify-center items-center" v-if="visible">
         <div class="bg-black opacity-70 absolute inset-0 cursor-zoom-out" @click="emit('close')" />
         <div
-            class="h-[calc(100dvh-5rem)] md:h-[calc(100dvh-10rem)] w-[calc(100dvw-2rem)] md:w-[calc(100dvw-10rem)] overflow-y-auto overflow-x-hidden p-4 flex items-center justify-center"
+            class="h-[95vh] custom-width overflow-y-auto overflow-x-hidden p-4 flex items-center justify-center"
         >
             <div class="h-full flex flex-col relative w-full bg-white rounded-xl">
-                <div class="bg-gray-400 h-full rounded-t-xl overflow-hidden">
+                <div class="bg-gray-300 h-full rounded-t-xl overflow-hidden">
                     <img :src="item.image_src" :alt="item.title" ref="zoom" class="w-full" />
                 </div>
-                <div class="px-4 py-4 md:py-6 md:px-6">
-                    <h3 class="text-gray-500 text-lg md:text-2xl mb-1" v-if="item.object">
+                <div class="px-4 py-4 tall:py-6 tall:px-6">
+                    <h3 class="text-gray-500 tall:text-2xl mb-1" v-if="item.object">
                         {{ item.object }}
                     </h3>
-                    <h2 class="text-xl md:text-4xl font-bold mb-1">{{ item.title }}</h2>
-                    <h3 class="text-gray-500 text-lg md:text-2xl mb-4">
+                    <h2 class="text-xl tall:text-4xl font-bold mb-1">{{ item.title }}</h2>
+                    <h3 class="text-gray-500 tall:text-2xl mb-4">
                         <span v-if="item.author">{{ item.author }}</span>
                         <span v-if="item.author && item.dating"> · </span>
                         <span v-if="item.dating">{{ item.dating }}</span>
@@ -24,14 +24,14 @@
                         <img :src="qrCode" class="w-20 h-20 md:w-32 md:h-32" alt="open in collection online" />
                         <div class="grow">
                             <div class="flex h-full items-top">
-                                <div class="ml-3 md:ml-4 md:text-2xl">
+                                <div class="ml-3 md:ml-4 tall:text-2xl">
                                     <span class="font-bold">Scannen Sie den Code, um das Objekt zu öffnen</span><br>
                                     <span>in MK&G Sammlung Online</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <ConfirmButton class="bg-black text-white my-2 md:my-4 text-lg md:text-2xl" @click="emit('close')"
+                    <ConfirmButton class="bg-black text-white my-2 tall:my-4 text-lg tall:text-2xl px-4 w-full" @click="emit('close')"
                         >Schließen</ConfirmButton
                     >
                 </div>
@@ -67,3 +67,9 @@ watch(zoom, (newZoom) => {
     }
 })
 </script>
+
+<style scoped>
+.custom-width {
+    width: calc(100vw - 5vh);
+}
+</style>
