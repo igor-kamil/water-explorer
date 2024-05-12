@@ -111,13 +111,14 @@ const init = async (id = null) => {
     activeItem.value = 1
     similarItems.value = []
     nextSimilar.value = null
-    prevSimilar.value = null
+    nextDifferent.value = null
+    // prevSimilar.value = null
     const response = await axios.get(apiUrl + (id !== null ? `?id=${id}` : ''))
     await processResponse(response)
     isLoading.value = false
     loadNextSimilar()
-    loadPrevSimilar()
-    // loadNextDifferent()
+    // loadPrevSimilar()
+    loadNextDifferent()
     loadNextYounger()
     loadNextOlder()
 }
@@ -238,12 +239,12 @@ const processResponse = async (response) => {
         differentItems.value[0][1].image_src,
         differentItems.value[0][1].image_src,
     ])
-    loadImages([
-        differentItems.value[0][0].image_src,
-        differentItems.value[0][2].image_src,
-        differentItems.value[1][0].image_src,
-        differentItems.value[1][2].image_src,
-    ])
+    // loadImages([
+    //     differentItems.value[0][0].image_src,
+    //     differentItems.value[0][2].image_src,
+    //     differentItems.value[1][0].image_src,
+    //     differentItems.value[1][2].image_src,
+    // ])
 }
 
 const toggleDetail = () => {
