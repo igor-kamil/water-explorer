@@ -26,7 +26,7 @@
                 />
             </div>
             <div
-                class="border-1 border-black grow h-[calc(100dvh-10rem)] sm:h-[calc(100dvh-16rem)] md:h-[calc(100dvh-24rem)]"
+                class="border-1 border-black grow h-[80vh]"
             >
                 <v-lazy-image
                     @click="toggleDetail()"
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white/50">
-        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-dark"></div>
+        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-500"></div>
     </div>
     <ItemDetail :visible="detailActive" @close="toggleDetail" :item="similarItems[activeItem]" />
     <InfoDetail :visible="infoActive" @close="toggleInfo" />

@@ -5,15 +5,15 @@
             class="h-[calc(100dvh-5rem)] md:h-[calc(100dvh-10rem)] w-[calc(100dvw-2rem)] md:w-[calc(100dvw-10rem)] overflow-y-auto overflow-x-hidden p-4 flex items-center justify-center"
         >
             <div class="h-full flex flex-col relative w-full bg-white rounded-xl">
-                <div class="bg-gray-softest h-full rounded-t-xl overflow-hidden">
+                <div class="bg-gray-400 h-full rounded-t-xl overflow-hidden">
                     <img :src="item.image_src" :alt="item.title" ref="zoom" class="w-full" />
                 </div>
                 <div class="px-4 py-4 md:py-6 md:px-6">
-                    <h3 class="text-gray-dark text-lg md:text-2xl mb-1" v-if="item.object">
+                    <h3 class="text-gray-500 text-lg md:text-2xl mb-1" v-if="item.object">
                         {{ item.object }}
                     </h3>
                     <h2 class="text-xl md:text-4xl font-bold mb-1">{{ item.title }}</h2>
-                    <h3 class="text-gray-dark text-lg md:text-2xl mb-4">
+                    <h3 class="text-gray-500 text-lg md:text-2xl mb-4">
                         <span v-if="item.author">{{ item.author }}</span>
                         <span v-if="item.author && item.dating"> · </span>
                         <span v-if="item.dating">{{ item.dating }}</span>
