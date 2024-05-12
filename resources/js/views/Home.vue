@@ -1,14 +1,7 @@
 <template>
     <div class="flex w-full h-[100dvh] max-h-[100dvh] flex-col border-1 border-black" v-if="similarItems.length !== 0">
         <div class="flex bg-white h-20 sm:h-32 md:h-48 shrink-0">
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative">
-                <button
-                    class="flex items-center justify-center text-gray-medium absolute inset-0 z-10 hover:text-gray-dark w-full text-3xl md:text-8xl"
-                    @click="toggleInfo()"
-                >
-                    ?
-                </button>
-            </div>
+            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative"></div>
             <div class="border-1 border-black grow relative">
                 <navigate-button @click="moveSimilar('up')" direction="up"></navigate-button>
                 <v-lazy-image
@@ -67,25 +60,7 @@
                     :key="differentItems[1][1].image_src"
                 />
             </div>
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative">
-                <button
-                    class="flex items-center justify-center text-gray-medium absolute inset-0 z-10 hover:text-gray-dark w-full"
-                    @click="init()"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-9 h-9 md:w-24 md:h-24"
-                        xml:space="preserve"
-                        viewBox="0 0 64 64"
-                        stroke="currentColor"
-                        fill="currentColor"
-                    >
-                        <path
-                            d="m24.293 26.707 1.414-1.414L15.414 15H0v2h14.586zM55.293 9.707 60.586 15h-14l-32 32H0v2h15.414l32-32h13.172l-5.293 5.293 1.561 1.414 7.146-7v-1.414l-7.146-7zM55.293 41.707 60.586 47H47.414l-9.707-9.707-1.414 1.414L46.586 49h14l-5.293 5.293 1.561 1.414 7.146-7v-1.414l-7.146-7z"
-                        />
-                    </svg>
-                </button>
-            </div>
+            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative"></div>
         </div>
     </div>
     <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white/50">
