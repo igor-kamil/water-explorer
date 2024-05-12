@@ -1,7 +1,7 @@
 <template>
-    <div class="flex w-full h-[100dvh] max-h-[100dvh] flex-col border-1 border-black" v-if="similarItems.length !== 0">
-        <div class="flex bg-white h-20 sm:h-32 md:h-48 shrink-0">
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative"></div>
+    <div class="flex w-full max-w-[57vh] aspect-square mx-auto h-[100dvh] max-h-[100dvh] flex-col border-1 border-black" v-if="similarItems.length !== 0">
+        <div class="flex bg-white h-[10vh] shrink-0">
+            <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
             <div class="border-1 border-black grow relative">
                 <navigate-button @click="moveSimilar('up')" direction="up"></navigate-button>
                 <v-lazy-image
@@ -12,10 +12,10 @@
                     :key="differentItems[0][1].image_src"
                 />
             </div>
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0"></div>
+            <div class="border-1 border-black w-[10vh] shrink-0"></div>
         </div>
         <div class="flex bg-white grow">
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative">
+            <div class="border-1 border-black w-[10vh] shrink-0 relative">
                 <navigate-button @click="moveSimilar('left')" direction="left"></navigate-button>
                 <v-lazy-image
                     :src="similarItems[activeItem - 1].image_src"
@@ -37,7 +37,7 @@
                     :key="similarItems[activeItem].image_src"
                 />
             </div>
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative">
+            <div class="border-1 border-black w-[10vh] shrink-0 relative">
                 <navigate-button @click="moveSimilar('right')" direction="right"></navigate-button>
                 <v-lazy-image
                     :src="similarItems[activeItem + 1].image_src"
@@ -48,8 +48,8 @@
                 />
             </div>
         </div>
-        <div class="flex bg-white h-20 sm:h-32 md:h-48 shrink-0">
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative"></div>
+        <div class="flex bg-white h-[10vh] shrink-0">
+            <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
             <div class="border-1 border-black grow relative">
                 <navigate-button @click="moveSimilar('down')" direction="down"></navigate-button>
                 <v-lazy-image
@@ -60,7 +60,7 @@
                     :key="differentItems[1][1].image_src"
                 />
             </div>
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative"></div>
+            <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
         </div>
     </div>
     <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white/50">
