@@ -194,7 +194,7 @@ const processResponse = async (response) => {
 
 const toggleDetail = () => {
     if (!detailActive.value) {
-        incrementDetailCount(similarItems.value[activeItem.value].id)
+        incrementDetailCount(items.value[2].id)
     }
     detailActive.value = !detailActive.value
 }
