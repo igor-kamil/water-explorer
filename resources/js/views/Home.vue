@@ -67,42 +67,28 @@
         <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-500"></div>
     </div>
     <ItemDetail :visible="detailActive" @close="toggleDetail" :item="items[2]" />
-    <InfoDetail :visible="infoActive" @close="toggleInfo" />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getActiveLanguage, loadLanguageAsync } from 'laravel-vue-i18n'
-// import ImageDisplay from '../components/ImageDisplay.vue'
 import VLazyImage from "v-lazy-image";
 import ItemDetail from '../components/ItemDetail.vue'
-import InfoDetail from '../components/InfoDetail.vue'
 import NavigateButton from '../components/NavigateButton.vue'
 
-const router = useRouter()
 const route = useRoute()
 const locale = ref('en')
 
 const items = ref([])
-// const similarItems = ref([])
-// const differentItems = ref([])
 const isLoading = ref(true)
 const detailActive = ref(false)
-const infoActive = ref(false)
 const viewedItemIds = ref([])
-// const activeItem = ref(1)
 
-// const nextSimilar = ref(null)
-// const prevSimilar = ref(null)
-// const nextDifferent = ref([])
-// const nextYounger = ref([])
-// const nextOlder = ref([])
 
 const apiUrl = '/api/items/'
 
 onMounted(async () => {
-    // apiUrl = useParam === 'digicult' ? '/api/items-digicult/' : '/api/items/'
     const itemId = route.query.id ?? null
     init(itemId)
 })
@@ -113,56 +99,7 @@ const init = async (id = null) => {
     const response = await axios.get(apiUrl + (id !== null ? `?id=${id}` : ''))
     await processResponse(response)
     isLoading.value = false
-    // loadNextSimilar()
-    // loadPrevSimilar()
-    // loadNextDifferent()
-    // loadNextYounger()
-    // loadNextOlder()
 }
-
-// const loadNextSimilar = async () => {
-//     const id = nextSimilar.value ? nextSimilar.value.id : similarItems.value[activeItem.value + 1].id
-//     const viewedItemIds = similarItems.value.map((item) => item.id).join(',')
-//     const response = await axios.get(`/api/similar-item/${id}/?exclude=${viewedItemIds}`)
-//     nextSimilar.value = response.data.data
-//     // loadImages([nextSimilar.value.image_src])
-// }
-
-// const loadDifferent = async (id) => {
-//     const viewedItemIds = similarItems.value.map((item) => item.id).join(',')
-//     const response = await axios.get(`/api/different-items/${id}/?exclude=${viewedItemIds}`)
-//     const items = response.data
-//     differentItems.value = [items[0], items[1]]
-// }
-
-// const loadPrevSimilar = async () => {
-//     const id = prevSimilar.value ? prevSimilar.value.id : similarItems.value[activeItem.value - 1].id
-//     const viewedItemIds = similarItems.value.map((item) => item.id).join(',')
-//     const response = await axios.get(`/api/similar-item/${id}/?exclude=${viewedItemIds}`)
-//     prevSimilar.value = response.data.data
-//     loadImages([prevSimilar.value.image_src])
-// }
-
-// const loadNextDifferent = async () => {
-//     const id = similarItems.value[activeItem.value].id
-//     const response = await axios.get(`/api/different-items/${id}/?exclude=${viewedItemIds}`)
-//     nextDifferent.value = response.data
-//     loadImages(nextDifferent.value.map((item) => item.image_src))
-// }
-
-// const loadNextYounger = async () => {
-//     const id = similarItems.value[activeItem.value].id
-//     const response = await axios.get(`/api/younger-items/${id}`)
-//     nextYounger.value = response.data
-//     loadImages(nextYounger.value.map((item) => item.image_src))
-// }
-
-// const loadNextOlder = async () => {
-//     const id = similarItems.value[activeItem.value].id
-//     const response = await axios.get(`/api/older-items/${id}`)
-//     nextOlder.value = response.data
-//     loadImages(nextOlder.value.map((item) => item.image_src))
-// }
 
 const loadItem = async (id) => {
     isLoading.value = true
@@ -173,8 +110,10 @@ const loadItem = async (id) => {
 
 const processResponse = async (response) => {
     items.value = response.data.data
-    // viewedItemIds.value.push(...items.value.map((item) => item.id))
     viewedItemIds.value.push(items.value[2].id)
+    if (viewedItemIds.value.length > 50) {
+        viewedItemIds.value.shift()
+    }
 
     // const items = response.data
     // differentItems.value = [items[0], items[2]]
@@ -199,9 +138,6 @@ const toggleDetail = () => {
     detailActive.value = !detailActive.value
 }
 
-const toggleInfo = () => {
-    infoActive.value = !infoActive.value
-}
 
 const loadImages = (imageSrcArray) => {
     const promises = imageSrcArray.map((src) => {
