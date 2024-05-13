@@ -162,6 +162,12 @@ class Item extends Model
       return $youngerItem;
     }
 
+    public function getDifferent($exclude = [])
+    {
+      $differentItem = Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->where('year', '!=', $this->year)->whereNotIn('id', $exclude)->inRandomOrder()->first();
+      return $differentItem;
+    }
+
 
     public static function formatDatesIntoCollection($date_string, $separator = ' / ')
     {
