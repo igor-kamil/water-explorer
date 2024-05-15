@@ -14,19 +14,19 @@
             </div>
             <div class="border-1 border-black w-[10vh] shrink-0"></div>
         </div>
-        <div class="flex bg-white grow">
-            <div class="border-1 border-black w-[10vh] shrink-0 relative">
+        <div class=" bg-white grow relative w-full flex gap-6 snap-x snap-mandatory overflow-x-auto">
+            <div class="border-1 border-black w-preview shrink-0 relative">
                 <navigate-button @click="loadItem(items[1].id)" direction="left"></navigate-button>
                 <v-lazy-image
                     :src="items[1].image_src"
                     :src-placeholder="items[1].tiny_placeholder"
                     :alt="items[1].title"
-                    class="w-full h-full object-cover object-right"
+                    class="w-full h-full object-cover"
                     :key="items[1].image_src"
                 />
             </div>
             <div
-                class="border-1 border-black grow h-[80vh]"
+                class="border-1 border-black w-preview shrink-0 h-[80vh]"
             >
                 <v-lazy-image
                     @click="toggleDetail()"
@@ -37,13 +37,13 @@
                     :key="items[2].image_src"
                 />
             </div>
-            <div class="border-1 border-black w-[10vh] shrink-0 relative">
+            <div class="border-1 border-black w-preview shrink-0 relative">
                 <navigate-button @click="loadItem(items[3].id)" direction="right"></navigate-button>
                 <v-lazy-image
                     :src="items[3].image_src"
                     :src-placeholder="items[3].tiny_placeholder"
                     :alt="items[3].title"
-                    class="w-full h-full object-cover object-left"
+                    class="w-full h-full object-cover"
                     :key="items[3].image_src"
                 />
             </div>
@@ -156,3 +156,9 @@ const incrementDetailCount = async (id) => {
     const response = await axios.put(`/api/items/${id}/increment-detail-count`)
 }
 </script>
+
+<style scoped>
+.w-preview {
+    width: calc(100% - 20vh);
+}
+</style>
