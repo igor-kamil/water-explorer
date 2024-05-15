@@ -125,7 +125,7 @@ const loadItem = async (id) => {
 const processResponse = async (response) => {
     items.value = response.data.data
     viewedItemIds.value.push(items.value[2].id)
-    if (viewedItemIds.value.length > 50) {
+    if (viewedItemIds.value.length > 20) {
         viewedItemIds.value.shift()
     }
 
