@@ -1,244 +1,128 @@
 <template>
-    <div class="flex w-full h-[100dvh] max-h-[100dvh] flex-col border-1 border-black" v-if="similarItems.length !== 0">
-        <div class="flex bg-white h-20 sm:h-32 md:h-48 shrink-0">
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative"></div>
+    <div class="flex w-full max-w-[57vh] aspect-square mx-auto h-[100dvh] max-h-[100dvh] flex-col border-1 border-black" v-if="items.length !== 0">
+        <div class="flex bg-white h-[10vh] shrink-0">
+            <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
             <div class="border-1 border-black grow relative">
-                <navigate-button @click="moveSimilar('up')" direction="up"></navigate-button>
+                <navigate-button @click="loadItem(items[0].id)" direction="up"></navigate-button>
                 <v-lazy-image
-                    :src="differentItems[0][1].image_src"
-                    :src-placeholder="differentItems[0][1].tiny_placeholder"
-                    :alt="differentItems[0][1].title"
+                    :src="items[0].image_src"
+                    :src-placeholder="items[0].tiny_placeholder"
+                    :alt="items[0].title"
                     class="w-full h-full object-cover object-bottom"
-                    :key="differentItems[0][1].image_src"
+                    :key="items[0].image_src"
                 />
             </div>
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0"></div>
+            <div class="border-1 border-black w-[10vh] shrink-0"></div>
         </div>
         <div class="flex bg-white grow">
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative">
-                <navigate-button @click="moveSimilar('left')" direction="left"></navigate-button>
+            <div class="border-1 border-black w-[10vh] shrink-0 relative">
+                <navigate-button @click="loadItem(items[1].id)" direction="left"></navigate-button>
                 <v-lazy-image
-                    :src="similarItems[activeItem - 1].image_src"
-                    :src-placeholder="similarItems[activeItem - 1].tiny_placeholder"
-                    :alt="similarItems[activeItem - 1].title"
+                    :src="items[1].image_src"
+                    :src-placeholder="items[1].tiny_placeholder"
+                    :alt="items[1].title"
                     class="w-full h-full object-cover object-right"
-                    :key="similarItems[activeItem - 1].image_src"
+                    :key="items[1].image_src"
                 />
             </div>
             <div
-                class="border-1 border-black grow h-[calc(100dvh-10rem)] sm:h-[calc(100dvh-16rem)] md:h-[calc(100dvh-24rem)]"
+                class="border-1 border-black grow h-[80vh]"
             >
                 <v-lazy-image
                     @click="toggleDetail()"
-                    :src="similarItems[activeItem].image_src"
-                    :src-placeholder="similarItems[activeItem].tiny_placeholder"
-                    :alt="similarItems[activeItem].title"
+                    :src="items[2].image_src"
+                    :src-placeholder="items[2].tiny_placeholder"
+                    :alt="items[2].title"
                     class="w-full h-full object-cover cursor-pointer"
-                    :key="similarItems[activeItem].image_src"
+                    :key="items[2].image_src"
                 />
             </div>
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative">
-                <navigate-button @click="moveSimilar('right')" direction="right"></navigate-button>
+            <div class="border-1 border-black w-[10vh] shrink-0 relative">
+                <navigate-button @click="loadItem(items[3].id)" direction="right"></navigate-button>
                 <v-lazy-image
-                    :src="similarItems[activeItem + 1].image_src"
-                    :src-placeholder="similarItems[activeItem + 1].tiny_placeholder"
-                    :alt="similarItems[activeItem + 1].title"
+                    :src="items[3].image_src"
+                    :src-placeholder="items[3].tiny_placeholder"
+                    :alt="items[3].title"
                     class="w-full h-full object-cover object-left"
-                    :key="similarItems[activeItem + 1].image_src"
+                    :key="items[3].image_src"
                 />
             </div>
         </div>
-        <div class="flex bg-white h-20 sm:h-32 md:h-48 shrink-0">
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative"></div>
+        <div class="flex bg-white h-[10vh] shrink-0">
+            <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
             <div class="border-1 border-black grow relative">
-                <navigate-button @click="moveSimilar('down')" direction="down"></navigate-button>
+                <navigate-button @click="loadItem(items[4].id)" direction="down"></navigate-button>
                 <v-lazy-image
-                    :src="differentItems[1][1].image_src"
-                    :src-placeholder="differentItems[1][1].tiny_placeholder"
-                    :alt="differentItems[1][1].title"
+                    :src="items[4].image_src"
+                    :src-placeholder="items[4].tiny_placeholder"
+                    :alt="items[4].title"
                     class="w-full h-full object-cover object-top"
-                    :key="differentItems[1][1].image_src"
+                    :key="items[4].image_src"
                 />
             </div>
-            <div class="border-1 border-black w-20 sm:w-32 md:w-48 shrink-0 relative"></div>
+            <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
         </div>
     </div>
     <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white/50">
-        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-dark"></div>
+        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-500"></div>
     </div>
-    <ItemDetail :visible="detailActive" @close="toggleDetail" :item="similarItems[activeItem]" />
-    <InfoDetail :visible="infoActive" @close="toggleInfo" />
+    <ItemDetail :visible="detailActive" @close="toggleDetail" :item="items[2]" />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getActiveLanguage, loadLanguageAsync } from 'laravel-vue-i18n'
-// import ImageDisplay from '../components/ImageDisplay.vue'
 import VLazyImage from "v-lazy-image";
 import ItemDetail from '../components/ItemDetail.vue'
-import InfoDetail from '../components/InfoDetail.vue'
 import NavigateButton from '../components/NavigateButton.vue'
 
-const router = useRouter()
 const route = useRoute()
 const locale = ref('en')
 
-// const items = ref([])
-const similarItems = ref([])
-const differentItems = ref([])
+const items = ref([])
 const isLoading = ref(true)
 const detailActive = ref(false)
-const infoActive = ref(false)
-const activeItem = ref(1)
+const viewedItemIds = ref([])
 
-const nextSimilar = ref(null)
-const prevSimilar = ref(null)
-const nextDifferent = ref([])
-const nextYounger = ref([])
-const nextOlder = ref([])
 
 const apiUrl = '/api/items/'
 
 onMounted(async () => {
-    // apiUrl = useParam === 'digicult' ? '/api/items-digicult/' : '/api/items/'
     const itemId = route.query.id ?? null
     init(itemId)
 })
 
 const init = async (id = null) => {
     isLoading.value = true
-    activeItem.value = 1
-    similarItems.value = []
-    nextSimilar.value = null
-    nextDifferent.value = null
-    // prevSimilar.value = null
+    
     const response = await axios.get(apiUrl + (id !== null ? `?id=${id}` : ''))
     await processResponse(response)
     isLoading.value = false
-    loadNextSimilar()
-    // loadPrevSimilar()
-    loadNextDifferent()
-    loadNextYounger()
-    loadNextOlder()
-}
-
-const loadNextSimilar = async () => {
-    const id = nextSimilar.value ? nextSimilar.value.id : similarItems.value[activeItem.value + 1].id
-    const viewedItemIds = similarItems.value.map((item) => item.id).join(',')
-    const response = await axios.get(`/api/similar-item/${id}/?exclude=${viewedItemIds}`)
-    nextSimilar.value = response.data.data
-    // loadImages([nextSimilar.value.image_src])
-}
-
-const loadDifferent = async (id) => {
-    const viewedItemIds = similarItems.value.map((item) => item.id).join(',')
-    const response = await axios.get(`/api/different-items/${id}/?exclude=${viewedItemIds}`)
-    const items = response.data
-    differentItems.value = [items[0], items[1]]
-}
-
-const loadPrevSimilar = async () => {
-    const id = prevSimilar.value ? prevSimilar.value.id : similarItems.value[activeItem.value - 1].id
-    const viewedItemIds = similarItems.value.map((item) => item.id).join(',')
-    const response = await axios.get(`/api/similar-item/${id}/?exclude=${viewedItemIds}`)
-    prevSimilar.value = response.data.data
-    loadImages([prevSimilar.value.image_src])
-}
-
-const loadNextDifferent = async () => {
-    const id = similarItems.value[activeItem.value].id
-    const response = await axios.get(`/api/different-items/${id}/?exclude=${viewedItemIds}`)
-    nextDifferent.value = response.data
-    loadImages(nextDifferent.value.map((item) => item.image_src))
-}
-
-const loadNextYounger = async () => {
-    const id = similarItems.value[activeItem.value].id
-    const response = await axios.get(`/api/younger-items/${id}`)
-    nextYounger.value = response.data
-    loadImages(nextYounger.value.map((item) => item.image_src))
-}
-
-const loadNextOlder = async () => {
-    const id = similarItems.value[activeItem.value].id
-    const response = await axios.get(`/api/older-items/${id}`)
-    nextOlder.value = response.data
-    loadImages(nextOlder.value.map((item) => item.image_src))
 }
 
 const loadItem = async (id) => {
     isLoading.value = true
-    const response = await axios.get(`${apiUrl}?id=${id}`)
+    const response = await axios.get(`${apiUrl}?id=${id}&exclude=${viewedItemIds.value.join(',')}`)
     processResponse(response)
     isLoading.value = false
 }
 
-const moveSimilar = async (direction) => {
-    // move pointer to "active"
-    isLoading.value = true
-    switch (direction) {
-        case 'up':
-            differentItems.value[1] = [
-                similarItems.value[activeItem.value - 1],
-                similarItems.value[activeItem.value],
-                similarItems.value[activeItem.value + 1],
-            ]
-            similarItems.value = differentItems.value[0]
-            differentItems.value[0] = nextYounger.value
-            activeItem.value = 1
-            nextSimilar.value = null
-            prevSimilar.value = null
-            loadNextSimilar()
-            loadPrevSimilar()
-            loadNextYounger()
-            break
-        case 'down':
-            differentItems.value[0] = [
-                similarItems.value[activeItem.value - 1],
-                similarItems.value[activeItem.value],
-                similarItems.value[activeItem.value + 1],
-            ]
-            similarItems.value = differentItems.value[1]
-            differentItems.value[1] = nextOlder.value
-            activeItem.value = 1
-            nextSimilar.value = null
-            prevSimilar.value = null
-            loadNextSimilar()
-            loadPrevSimilar()
-            loadNextOlder()
-            break
-        case 'left':
-            if (activeItem.value > 2) {
-                activeItem.value--
-            } else {
-                similarItems.value.unshift(prevSimilar.value)
-                loadPrevSimilar()
-            }
-            loadDifferent(similarItems.value[activeItem.value].id)
-            break
-        case 'right':
-            if (activeItem.value == similarItems.value.length - 2) {
-                similarItems.value.push(nextSimilar.value)
-                loadNextSimilar()
-            }
-            activeItem.value++
-            loadDifferent(similarItems.value[activeItem.value].id)
-            break
-    }
-    incrementViewCount(similarItems.value[activeItem.value].id)
-    isLoading.value = false
-}
-
 const processResponse = async (response) => {
-    const items = response.data
-    differentItems.value = [items[0], items[2]]
-    similarItems.value = items[1]
-    await loadImages([
-        ...similarItems.value.map((item) => item.image_src),
-        differentItems.value[0][1].image_src,
-        differentItems.value[0][1].image_src,
-    ])
+    items.value = response.data.data
+    viewedItemIds.value.push(items.value[2].id)
+    if (viewedItemIds.value.length > 50) {
+        viewedItemIds.value.shift()
+    }
+
+    // const items = response.data
+    // differentItems.value = [items[0], items[2]]
+    // similarItems.value = items[1]
+    // await loadImages([
+    //     ...similarItems.value.map((item) => item.image_src),
+    //     differentItems.value[0][1].image_src,
+    //     differentItems.value[0][1].image_src,
+    // ])
     // loadImages([
     //     differentItems.value[0][0].image_src,
     //     differentItems.value[0][2].image_src,
@@ -249,14 +133,11 @@ const processResponse = async (response) => {
 
 const toggleDetail = () => {
     if (!detailActive.value) {
-        incrementDetailCount(similarItems.value[activeItem.value].id)
+        incrementDetailCount(items.value[2].id)
     }
     detailActive.value = !detailActive.value
 }
 
-const toggleInfo = () => {
-    infoActive.value = !infoActive.value
-}
 
 const loadImages = (imageSrcArray) => {
     const promises = imageSrcArray.map((src) => {
@@ -271,9 +152,6 @@ const loadImages = (imageSrcArray) => {
     return Promise.all(promises)
 }
 
-const incrementViewCount = async (id) => {
-    const response = await axios.put(`/api/items/${id}/increment-view-count`)
-}
 const incrementDetailCount = async (id) => {
     const response = await axios.put(`/api/items/${id}/increment-detail-count`)
 }

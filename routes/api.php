@@ -31,18 +31,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 Route::get('/items/', function (Request $request) {
     $mainItem =  ($request->has('id')) ? Item::findOrFail($request->input('id')) : Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->inRandomOrder()->firstOrFail();
-    $mainItem->increment('view_count');
-    $similarItems = $mainItem->getVisualySimilar(2);
-    $youngerItem = $mainItem->getYounger();
-    $similarToYoungerItem = $youngerItem->getVisualySimilar(2);
-    $olderItem = $mainItem->getOlder();
-    $similarToOlderItem = $olderItem->getVisualySimilar(2);
-    
-    return response()->json([ 
-        ItemResource::collection([$similarToYoungerItem[0], $youngerItem, $similarToYoungerItem[1]]),
-        ItemResource::collection([$similarItems[0], $mainItem, $similarItems[1]]),
-        ItemResource::collection([$similarToOlderItem[0], $olderItem, $similarToOlderItem[1]]),
-    ]);
+    $exclude = explode(',' , $request->get('exclude', ''));
+    if ($request->has('id')) {
+        $mainItem->increment('view_count');
+    }
+    $similarItem = $mainItem->getVisualySimilar(1, $exclude)->first();
+    $youngerItem = $mainItem->getYounger($exclude);
+    $olderItem = $mainItem->getOlder($exclude);
+    $differentItem = $mainItem->getDifferent($exclude);
+    return ItemResource::collection([$youngerItem, $differentItem, $mainItem, $similarItem, $olderItem]);
 });
 
 
