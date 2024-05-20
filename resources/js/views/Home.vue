@@ -79,6 +79,7 @@ import { getActiveLanguage, loadLanguageAsync } from 'laravel-vue-i18n'
 import VLazyImage from 'v-lazy-image'
 import ItemDetail from '../components/ItemDetail.vue'
 import NavigateButton from '../components/NavigateButton.vue'
+import { useStorage } from '@vueuse/core'
 
 
 // import Swiper from 'swiper';
@@ -90,7 +91,7 @@ const locale = ref('en')
 const items = ref([])
 const isLoading = ref(true)
 const detailActive = ref(false)
-const viewedItemIds = ref([])
+const viewedItemIds = useStorage('viewedItemIds', [], sessionStorage)
 
 const apiUrl = '/api/items/'
 
@@ -103,7 +104,7 @@ const router = useRouter();
 onMounted(async () => {
     const itemId = route.query.id ?? null
     // viewedItemIds.value = route.query.viewedItemIds ?? []
-    viewedItemIds.value = (route.query.viewedItemIds) ? route.query.viewedItemIds.split(',') : []
+    // viewedItemIds.value = (route.query.viewedItemIds) ? route.query.viewedItemIds.split(',') : []
     init(itemId)
 })
 
@@ -186,15 +187,15 @@ const onSlideChange = (swiper) => {
     // }
     if (swiperEl.swiper.activeIndex !== undefined) {
 
-    console.log(swiperEl.swiper.activeIndex)
+    // console.log(swiperEl.swiper.activeIndex)
     if (swiperEl.swiper.activeIndex === 0) {
         // loadItem(items.value[1].id)
         // router.push({ query: { id: items.value[1].id } })
-        window.location.href = `/?id=${items.value[1].id}&viewedItemIds=${viewedItemIds.value.join(',')}`
+        window.location.href = `/?id=${items.value[1].id}`
     } else if (swiperEl.swiper.activeIndex === 2) {
         // loadItem(items.value[3].id)
         // router.push({ query: { id: items.value[3].id } })
-        window.location.href = `/?id=${items.value[3].id}&viewedItemIds=${viewedItemIds.value.join(',')}`
+        window.location.href = `/?id=${items.value[3].id}`
     }
 }
 }
