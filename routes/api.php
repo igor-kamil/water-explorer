@@ -35,7 +35,7 @@ Route::get('/items/', function (Request $request) {
     if ($request->has('id')) {
         $mainItem->increment('view_count');
     }
-    $similarItem = $mainItem->getVisualySimilar(1, $exclude)->first();
+    $similarItem = $mainItem->getVisualySimilar(4, $exclude)->random(); // take random item from similar items for bigger entropy
     $youngerItem = $mainItem->getYounger($exclude);
     $olderItem = $mainItem->getOlder($exclude);
     $differentItem = $mainItem->getDifferent($exclude);
@@ -62,7 +62,7 @@ Route::get('/next-items/{id}', function ($id, Request $request) {
 Route::get('/similar-item/{id}', function ($id, Request $request) {
     $item = Item::findOrFail($id);
     $exclude = explode(',' , $request->get('exclude', ''));
-    $similiarItem = $item->getVisualySimilar(1,$exclude)->first();
+    $similiarItem = $item->getVisualySimilar(4,$exclude)->random(); // take random item from similar items for bigger entropy
     return new ItemResource($similiarItem);
 });
 

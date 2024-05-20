@@ -143,9 +143,9 @@ class Item extends Model
         $items = $this->whereNotNull('tiny_placeholder')->whereNotNull('year')->whereIn('id', $ids)->limit($limit)->get();
         
         // fallback... to return at lease better to remove later
-        if ($items->count() < $limit) {
-            return $this->getSimilar($limit, $exclude);
-        }
+        // if ($items->count() < $limit) {
+        //     return $this->getSimilar($limit, $exclude);
+        // }
         return $items;
     }
 
