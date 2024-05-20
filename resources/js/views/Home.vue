@@ -1,5 +1,5 @@
 <template>
-        <div class="flex w-full max-w-[57vh] aspect-square mx-auto h-[100dvh] max-h-[100dvh] flex-col border-1 border-black" v-if="items.length !== 0">
+        <div class="flex w-full max-w-[57vh] aspect-square mx-auto h-[100dvh] max-h-[100dvh] flex-col border-1 border-black" v-if="items.length !== 0"  ref="swipeArea">
         <div class="flex bg-white h-[10vh] shrink-0">
             <div class="border-1 border-black w-[10vh] shrink-0 relative opacity-50"></div>
             <div class="border-1 border-black grow relative">
@@ -70,14 +70,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getActiveLanguage, loadLanguageAsync } from 'laravel-vue-i18n'
 import VLazyImage from 'v-lazy-image'
 import ItemDetail from '../components/ItemDetail.vue'
 import NavigateButton from '../components/NavigateButton.vue'
 import { useStorage } from '@vueuse/core'
-
+import { useSwipe } from '@vueuse/core'
 
 const route = useRoute()
 const locale = ref('en')
@@ -90,14 +90,32 @@ const viewedItemIds = useStorage('viewedItemIds', [], sessionStorage)
 const apiUrl = '/api/items/'
 
 const router = useRouter();
-
+const swipeArea = ref(null);
 
 onMounted(async () => {
     const itemId = route.query.id ?? null
     // viewedItemIds.value = route.query.viewedItemIds ?? []
     // viewedItemIds.value = (route.query.viewedItemIds) ? route.query.viewedItemIds.split(',') : []
     init(itemId)
+
 })
+
+const { direction, isSwiping, lengthX, lengthY } = useSwipe(
+  swipeArea,
+  {
+    passive: true,
+    onSwipe(e) {
+    //   if (containerWidth.value) {
+    //     if (lengthX.value < 0) {
+    //       const length = Math.abs(lengthX.value)
+    //   }
+        console.log(e, direction.value, lengthX.value, lengthY.value)
+    },
+    onSwipeEnd(e, direction ) {
+        console.log(e, direction)
+    },
+  },
+)
 
 const init = async (id = null) => {
     isLoading.value = true
