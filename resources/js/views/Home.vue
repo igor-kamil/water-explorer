@@ -1,5 +1,9 @@
 <template>
-        <div class="flex w-full max-w-[57vh] aspect-square mx-auto h-[100dvh] max-h-[100dvh] flex-col border-1 border-black" v-if="items.length !== 0"  ref="swipeArea">
+    <div
+        class="flex w-full max-w-[57vh] aspect-square mx-auto h-[100dvh] max-h-[100dvh] flex-col border-1 border-black"
+        v-if="items.length !== 0"
+        ref="swipeArea"
+    >
         <div class="flex bg-white h-[10vh] shrink-0">
             <div class="border-1 border-black w-[10vh] shrink-0 relative opacity-50"></div>
             <div class="border-1 border-black grow relative">
@@ -14,7 +18,7 @@
             </div>
             <div class="border-1 border-black w-[10vh] shrink-0"></div>
         </div>
-        <div class=" bg-white grow relative w-full flex gap-6 snap-x snap-mandatory overflow-hidden justify-center">
+        <div class="bg-white grow relative w-full flex gap-6 snap-x snap-mandatory overflow-hidden justify-center">
             <div class="border-1 border-black w-preview shrink-0 relative">
                 <navigate-button @click="loadItem(items[1].id)" direction="left"></navigate-button>
                 <v-lazy-image
@@ -25,9 +29,7 @@
                     :key="items[1].image_src"
                 />
             </div>
-            <div
-                class="border-1 border-black w-preview shrink-0 h-[80vh]"
-            >
+            <div class="border-1 border-black w-preview shrink-0 h-[80vh]">
                 <v-lazy-image
                     @click="toggleDetail()"
                     :src="items[2].image_src"
@@ -89,51 +91,51 @@ const viewedItemIds = useStorage('viewedItemIds', [], sessionStorage)
 
 const apiUrl = '/api/items/'
 
-const router = useRouter();
-const swipeArea = ref(null);
+const router = useRouter()
+const swipeArea = ref(null)
 
 onMounted(async () => {
     const itemId = route.query.id ?? null
     // viewedItemIds.value = route.query.viewedItemIds ?? []
     // viewedItemIds.value = (route.query.viewedItemIds) ? route.query.viewedItemIds.split(',') : []
     init(itemId)
-
 })
 
-const { direction, isSwiping, lengthX, lengthY } = useSwipe(
-  swipeArea,
-  {
+const { direction, isSwiping, lengthX, lengthY } = useSwipe(swipeArea, {
     passive: true,
     onSwipe(e) {
-    //   if (containerWidth.value) {
-    //     if (lengthX.value < 0) {
-    //       const length = Math.abs(lengthX.value)
-    //   }
-        // console.log(e, direction.value, lengthX.value, lengthY.value)
+        //   if (containerWidth.value) {
+        //     if (lengthX.value < 0) {
+        //       const length = Math.abs(lengthX.value)
+        //   }
+        console.log(e, direction.value, lengthX.value, lengthY.value)
     },
-    onSwipeEnd(e, direction ) {
-        switch (direction) {
-            case 'LEFT':
-                loadItem(items.value[3].id)
-                break;
-            case 'RIGHT':
-                loadItem(items.value[1].id)
-                break;
-            case 'DOWN':
-                loadItem(items.value[0].id)
-                break;
-            case 'UP':
-                loadItem(items.value[4].id)
-                break;
+    onSwipeEnd(e, direction) {
+        if (Math.abs(lengthX.value) > 100 || Math.abs(lengthY.value) > 100) {
+            switch (direction) {
+                case 'LEFT':
+                    loadItem(items.value[3].id)
+                    break
+                case 'RIGHT':
+                    loadItem(items.value[1].id)
+                    break
+                case 'DOWN':
+                    loadItem(items.value[0].id)
+                    break
+                case 'UP':
+                    loadItem(items.value[4].id)
+                    break
+            }
         }
     },
-  },
-)
+})
 
 const init = async (id = null) => {
     isLoading.value = true
 
-    const response = await axios.get(apiUrl + `?exclude=${viewedItemIds.value.join(',')}` + (id !== null ? `&id=${id}` : ''))
+    const response = await axios.get(
+        apiUrl + `?exclude=${viewedItemIds.value.join(',')}` + (id !== null ? `&id=${id}` : '')
+    )
     await processResponse(response)
     isLoading.value = false
 }
@@ -191,7 +193,6 @@ const loadImages = (imageSrcArray) => {
 const incrementDetailCount = async (id) => {
     const response = await axios.put(`/api/items/${id}/increment-detail-count`)
 }
-
 </script>
 
 <style scoped>
