@@ -104,10 +104,10 @@ onMounted(async () => {
 const { direction, isSwiping, lengthX, lengthY } = useSwipe(swipeArea, {
     passive: true,
     onSwipe(e) {
-        //   if (containerWidth.value) {
-        //     if (lengthX.value < 0) {
-        //       const length = Math.abs(lengthX.value)
-        //   }
+        
+        const length = Math.sqrt(lengthX.value ** 2 + lengthY.value ** 2)
+        console.log(length)
+        swipeArea.value.style.opacity = Math.max(1 - length / 200, 0.1)
         console.log(e, direction.value, lengthX.value, lengthY.value)
     },
     onSwipeEnd(e, direction) {
@@ -127,6 +127,7 @@ const { direction, isSwiping, lengthX, lengthY } = useSwipe(swipeArea, {
                     break
             }
         }
+        swipeArea.value.style.opacity = 1
     },
 })
 
