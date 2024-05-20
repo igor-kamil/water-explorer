@@ -30,7 +30,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 */
 
 Route::get('/items/', function (Request $request) {
-    $mainItem =  ($request->has('id')) ? Item::findOrFail($request->input('id')) : Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->inRandomOrder()->firstOrFail();
+    $mainItem =  ($request->has('id')) ? Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->where('id', $request->input('id'))->firstOrFail() : Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->inRandomOrder()->firstOrFail();
     $exclude = explode(',' , $request->get('exclude', ''));
     if ($request->has('id')) {
         $mainItem->increment('view_count');
