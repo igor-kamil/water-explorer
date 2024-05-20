@@ -109,10 +109,23 @@ const { direction, isSwiping, lengthX, lengthY } = useSwipe(
     //     if (lengthX.value < 0) {
     //       const length = Math.abs(lengthX.value)
     //   }
-        console.log(e, direction.value, lengthX.value, lengthY.value)
+        // console.log(e, direction.value, lengthX.value, lengthY.value)
     },
     onSwipeEnd(e, direction ) {
-        console.log(e, direction)
+        switch (direction) {
+            case 'LEFT':
+                loadItem(items.value[3].id)
+                break;
+            case 'RIGHT':
+                loadItem(items.value[1].id)
+                break;
+            case 'DOWN':
+                loadItem(items.value[0].id)
+                break;
+            case 'UP':
+                loadItem(items.value[4].id)
+                break;
+        }
     },
   },
 )
