@@ -133,10 +133,8 @@ const { direction, isSwiping, lengthX, lengthY } = useSwipe(swipeArea, {
     passive: true,
     onSwipe(e) {
         const length = Math.sqrt(lengthX.value ** 2 + lengthY.value ** 2)
-        console.log(length)
-        overlay.value.style.opacity = Math.min(length / 200, 0.9)
-        // console.log(e, direction.value, lengthX.value, lengthY.value)
-        console.log(direction.value)
+        overlay.value.style.opacity = Math.min(length / 300, 0.9)
+        resetHiglightedItems()
         switch (direction.value) {
             case 'LEFT':
                 rightItem.value.classList.add('z-30')
@@ -170,10 +168,7 @@ const { direction, isSwiping, lengthX, lengthY } = useSwipe(swipeArea, {
             }
         }
         overlay.value.style.opacity = 0
-        leftItem.value.classList.remove('z-30')
-        rightItem.value.classList.remove('z-30')
-        downItem.value.classList.remove('z-30')
-        upItem.value.classList.remove('z-30')
+        resetHiglightedItems()
     },
 })
 
@@ -200,21 +195,6 @@ const processResponse = async (response) => {
     if (viewedItemIds.value.length > 20) {
         viewedItemIds.value.shift()
     }
-
-    // const items = response.data
-    // differentItems.value = [items[0], items[2]]
-    // similarItems.value = items[1]
-    // await loadImages([
-    //     ...similarItems.value.map((item) => item.image_src),
-    //     differentItems.value[0][1].image_src,
-    //     differentItems.value[0][1].image_src,
-    // ])
-    // loadImages([
-    //     differentItems.value[0][0].image_src,
-    //     differentItems.value[0][2].image_src,
-    //     differentItems.value[1][0].image_src,
-    //     differentItems.value[1][2].image_src,
-    // ])
 }
 
 const toggleDetail = () => {
@@ -240,6 +220,14 @@ const loadImages = (imageSrcArray) => {
 const incrementDetailCount = async (id) => {
     const response = await axios.put(`/api/items/${id}/increment-detail-count`)
 }
+
+const resetHiglightedItems = () => {
+    leftItem.value.classList.remove('z-30')
+    rightItem.value.classList.remove('z-30')
+    downItem.value.classList.remove('z-30')
+    upItem.value.classList.remove('z-30')
+}
+
 </script>
 
 <style scoped>
