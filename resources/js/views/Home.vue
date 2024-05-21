@@ -6,7 +6,7 @@
     >
         <div class="flex bg-white h-[10vh] shrink-0">
             <div class="border-1 border-black w-[10vh] shrink-0 relative opacity-50"></div>
-            <div class="border-1 border-black grow relative">
+            <div class="border-1 border-black grow relative" ref="upItem">
                 <navigate-button @click="loadItem(items[0].id)" direction="up"></navigate-button>
                 <v-lazy-image
                     :src="items[0].image_src"
@@ -19,7 +19,7 @@
             <div class="border-1 border-black w-[10vh] shrink-0"></div>
         </div>
         <div class="bg-white grow relative w-full flex snap-x snap-mandatory overflow-hidden justify-center">
-            <div class="border-1 border-black w-preview shrink-0 relative">
+            <div class="border-1 border-black w-preview shrink-0 relative" ref="leftItem">
                 <navigate-button @click="loadItem(items[1].id)" direction="left"></navigate-button>
                 <v-lazy-image
                     :src="items[1].image_src"
@@ -39,7 +39,7 @@
                     :key="items[2].image_src"
                 />
             </div>
-            <div class="border-1 border-black w-preview shrink-0 relative">
+            <div class="border-1 border-black w-preview shrink-0 relative" ref="rightItem">
                 <navigate-button @click="loadItem(items[3].id)" direction="right"></navigate-button>
                 <v-lazy-image
                     :src="items[3].image_src"
@@ -52,7 +52,7 @@
         </div>
         <div class="flex bg-white h-[10vh] shrink-0">
             <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
-            <div class="border-1 border-black grow relative">
+            <div class="border-1 border-black grow relative" ref="downItem">
                 <navigate-button @click="loadItem(items[4].id)" direction="down"></navigate-button>
                 <v-lazy-image
                     :src="items[4].image_src"
@@ -65,6 +65,7 @@
             <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
         </div>
     </div>
+    <div ref="overlay" class="fixed inset-0 bg-gray-800 z-10 pointer-events-none opacity-0"></div>
     <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/50 text-white/40">
         <svg
             class="text-gray-300 animate-spin w-20 h-20"
@@ -114,6 +115,12 @@ const apiUrl = '/api/items/'
 
 const router = useRouter()
 const swipeArea = ref(null)
+const overlay = ref(null)
+
+const upItem = ref(null)
+const downItem = ref(null)
+const leftItem = ref(null)
+const rightItem = ref(null)
 
 onMounted(async () => {
     const itemId = route.query.id ?? null
@@ -127,8 +134,23 @@ const { direction, isSwiping, lengthX, lengthY } = useSwipe(swipeArea, {
     onSwipe(e) {
         const length = Math.sqrt(lengthX.value ** 2 + lengthY.value ** 2)
         console.log(length)
-        swipeArea.value.style.opacity = Math.max(1 - length / 200, 0.1)
-        console.log(e, direction.value, lengthX.value, lengthY.value)
+        overlay.value.style.opacity = Math.min(length / 200, 0.9)
+        // console.log(e, direction.value, lengthX.value, lengthY.value)
+        console.log(direction.value)
+        switch (direction.value) {
+            case 'LEFT':
+                rightItem.value.classList.add('z-30')
+                break
+            case 'RIGHT':
+                leftItem.value.classList.add('z-30')
+                break
+            case 'DOWN':
+                upItem.value.classList.add('z-30')
+                break
+            case 'UP':
+                downItem.value.classList.add('z-30')
+                break
+        }
     },
     onSwipeEnd(e, direction) {
         if (Math.abs(lengthX.value) > 100 || Math.abs(lengthY.value) > 100) {
@@ -147,7 +169,11 @@ const { direction, isSwiping, lengthX, lengthY } = useSwipe(swipeArea, {
                     break
             }
         }
-        swipeArea.value.style.opacity = 1
+        overlay.value.style.opacity = 0
+        leftItem.value.classList.remove('z-30')
+        rightItem.value.classList.remove('z-30')
+        downItem.value.classList.remove('z-30')
+        upItem.value.classList.remove('z-30')
     },
 })
 
