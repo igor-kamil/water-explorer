@@ -7,7 +7,7 @@ module.exports = {
             },
             screens: {
                 'portrait': {'raw': '(orientation: portrait)'},
-                'tall': { 'raw': '(min-height: 1000px) and (orientation: portrait)' },
+                'tall': { 'raw': '(min-height: 1500px) and (orientation: portrait)' },
             }
         },
         fontFamily: {

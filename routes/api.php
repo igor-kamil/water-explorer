@@ -30,12 +30,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 */
 
 Route::get('/items/', function (Request $request) {
-    $mainItem =  ($request->has('id')) ? Item::findOrFail($request->input('id')) : Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->inRandomOrder()->firstOrFail();
+    $mainItem =  ($request->has('id')) ? Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->where('id', $request->input('id'))->firstOrFail() : Item::whereNotNull('tiny_placeholder')->whereNotNull('year')->inRandomOrder()->firstOrFail();
     $exclude = explode(',' , $request->get('exclude', ''));
     if ($request->has('id')) {
         $mainItem->increment('view_count');
     }
-    $similarItem = $mainItem->getVisualySimilar(1, $exclude)->first();
+    $similarItem = $mainItem->getVisualySimilar(4, $exclude)->random(); // take random item from similar items for bigger entropy
     $youngerItem = $mainItem->getYounger($exclude);
     $olderItem = $mainItem->getOlder($exclude);
     $differentItem = $mainItem->getDifferent($exclude);
@@ -62,7 +62,7 @@ Route::get('/next-items/{id}', function ($id, Request $request) {
 Route::get('/similar-item/{id}', function ($id, Request $request) {
     $item = Item::findOrFail($id);
     $exclude = explode(',' , $request->get('exclude', ''));
-    $similiarItem = $item->getVisualySimilar(1,$exclude)->first();
+    $similiarItem = $item->getVisualySimilar(4,$exclude)->random(); // take random item from similar items for bigger entropy
     return new ItemResource($similiarItem);
 });
 

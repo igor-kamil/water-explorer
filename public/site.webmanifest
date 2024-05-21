@@ -3,5 +3,14 @@
     "short_name": "Water explorer",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "minimal-ui"
+    "display": "standalone",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/icon.png",
+            "sizes": "512x412",
+            "type": "image/png"
+        }
+    ]
+
 }
