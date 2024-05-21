@@ -65,8 +65,38 @@
             <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
         </div>
     </div>
-    <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-white/50">
-        <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-500"></div>
+    <div v-if="isLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/50 text-white/80">
+        <svg
+            class="separator m-auto my-10 animate-pulse"
+            width="300"
+            viewBox="0 0 687 155"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <g
+                stroke="currentColor"
+                stroke-width="7"
+                fill="none"
+                fill-rule="evenodd"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path
+                    d="M20 58c27-13.33333333 54-20 81-20 40.5 0 40.5 20 81 20s40.626917-20 81-20 40.123083 20 80.5 20 40.5-20 81-20 40.5 20 81 20 40.626917-20 81-20c26.915389 0 53.748722 6.66666667 80.5 20"
+                    opacity=".1"
+                ></path>
+                <path
+                    d="M20 78c27-13.3333333 54-20 81-20 40.5 0 40.5 20 81 20s40.626917-20 81-20 40.123083 20 80.5 20 40.5-20 81-20 40.5 20 81 20 40.626917-20 81-20c26.915389 0 53.748722 6.6666667 80.5 20"
+                    opacity=".2"
+                ></path>
+                <path
+                    d="M20 98c27-13.3333333 54-20 81-20 40.5 0 40.5 20 81 20s40.626917-20 81-20 40.123083 20 80.5 20 40.5-20 81-20 40.5 20 81 20 40.626917-20 81-20c26.915389 0 53.748722 6.6666667 80.5 20"
+                    opacity=".6"
+                ></path>
+                <path
+                    d="M20 118c27-13.3333333 54-20 81-20 40.5 0 40.5 20 81 20s40.626917-20 81-20 40.123083 20 80.5 20 40.5-20 81-20 40.5 20 81 20 40.626917-20 81-20c26.915389 0 53.748722 6.6666667 80.5 20"
+                ></path>
+            </g>
+        </svg>
     </div>
     <ItemDetail :visible="detailActive" @close="toggleDetail" :item="items[2]" />
 </template>
@@ -104,7 +134,6 @@ onMounted(async () => {
 const { direction, isSwiping, lengthX, lengthY } = useSwipe(swipeArea, {
     passive: true,
     onSwipe(e) {
-        
         const length = Math.sqrt(lengthX.value ** 2 + lengthY.value ** 2)
         console.log(length)
         swipeArea.value.style.opacity = Math.max(1 - length / 200, 0.1)
