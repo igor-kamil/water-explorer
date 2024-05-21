@@ -200,6 +200,7 @@ const init = async (id = null) => {
 
 const loadItem = async (id) => {
     isLoading.value = true
+    router.push({ query: { id } })
     const response = await axios.get(`${apiUrl}?id=${id}&exclude=${viewedItemIds.value.join(',')}`)
     processResponse(response)
     isLoading.value = false
