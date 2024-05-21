@@ -18,7 +18,7 @@
             </div>
             <div class="border-1 border-black w-[10vh] shrink-0"></div>
         </div>
-        <div class="bg-white grow relative w-full flex gap-6 snap-x snap-mandatory overflow-hidden justify-center">
+        <div class="bg-white grow relative w-full flex snap-x snap-mandatory overflow-hidden justify-center">
             <div class="border-1 border-black w-preview shrink-0 relative">
                 <navigate-button @click="loadItem(items[1].id)" direction="left"></navigate-button>
                 <v-lazy-image
