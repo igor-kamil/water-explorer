@@ -7,14 +7,22 @@
         <div class="flex bg-white h-[10vh] shrink-0">
             <div class="border-1 border-black w-[10vh] shrink-0 relative opacity-50"></div>
             <div class="border-1 border-black grow relative" ref="upItem">
-                <navigate-button @click="loadItem(items[0].id)" direction="up"></navigate-button>
-                <v-lazy-image
-                    :src="items[0].image_src"
-                    :src-placeholder="items[0].tiny_placeholder"
-                    :alt="items[0].title"
-                    class="w-full h-full object-cover object-bottom"
-                    :key="items[0].image_src"
-                />
+                <template v-if="items[0]">
+                    <navigate-button @click="loadItem(items[0].id)" direction="up"></navigate-button>
+                    <v-lazy-image
+                        :src="items[0].image_src"
+                        :src-placeholder="items[0].tiny_placeholder"
+                        :alt="items[0].title"
+                        class="w-full h-full object-cover object-bottom"
+                        :key="items[0].image_src"
+                    />
+                </template>
+                <template v-else>
+                    <div class="w-full h-full flex items-center justify-center text-xl tall:text-3xl text-center">
+                        you have reached the newest one <br />
+                        good time to change direction
+                    </div>
+                </template>
             </div>
             <div class="border-1 border-black w-[10vh] shrink-0"></div>
         </div>
@@ -53,14 +61,22 @@
         <div class="flex bg-white h-[10vh] shrink-0">
             <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
             <div class="border-1 border-black grow relative" ref="downItem">
-                <navigate-button @click="loadItem(items[4].id)" direction="down"></navigate-button>
-                <v-lazy-image
-                    :src="items[4].image_src"
-                    :src-placeholder="items[4].tiny_placeholder"
-                    :alt="items[4].title"
-                    class="w-full h-full object-cover object-top"
-                    :key="items[4].image_src"
-                />
+                <template v-if="items[4]">
+                    <navigate-button @click="loadItem(items[4].id)" direction="down"></navigate-button>
+                    <v-lazy-image
+                        :src="items[4].image_src"
+                        :src-placeholder="items[4].tiny_placeholder"
+                        :alt="items[4].title"
+                        class="w-full h-full object-cover object-top"
+                        :key="items[4].image_src"
+                    />
+                </template>
+                <template v-else>
+                    <div class="w-full h-full flex items-center justify-center text-xl tall:text-3xl text-center">
+                        you have reached the oldest one <br />
+                        good time to change direction
+                    </div>
+                </template>
             </div>
             <div class="border-1 border-black w-[10vh] shrink-0 relative"></div>
         </div>
@@ -154,16 +170,16 @@ const { direction, isSwiping, lengthX, lengthY } = useSwipe(swipeArea, {
         if (Math.abs(lengthX.value) > 100 || Math.abs(lengthY.value) > 100) {
             switch (direction) {
                 case 'LEFT':
-                    loadItem(items.value[3].id)
+                    if (items.value[3]) loadItem(items.value[3].id)
                     break
                 case 'RIGHT':
-                    loadItem(items.value[1].id)
+                    if (items.value[1]) loadItem(items.value[1].id)
                     break
                 case 'DOWN':
-                    loadItem(items.value[0].id)
+                    if (items.value[0]) loadItem(items.value[0].id)
                     break
                 case 'UP':
-                    loadItem(items.value[4].id)
+                    if (items.value[4]) loadItem(items.value[4].id)
                     break
             }
         }
@@ -227,7 +243,6 @@ const resetHiglightedItems = () => {
     downItem.value.classList.remove('z-30')
     upItem.value.classList.remove('z-30')
 }
-
 </script>
 
 <style scoped>
