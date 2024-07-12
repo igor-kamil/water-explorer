@@ -52,7 +52,6 @@ class ImportAssets extends Command
         $rows = SimpleExcelReader::create($filePath)->getRows();
 
         $rows->each(function (array $row) {
-            // dd($row);
             try {
                 $id = Arr::get($row, 'dc_Inventarnummer');
                 if (Str::endsWith(Arr::get($row, 'Asset-Name'), '.jpg') && !Str::contains(Arr::get($row, 'Asset-Name'), '+')) {

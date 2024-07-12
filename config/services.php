@@ -23,6 +23,12 @@ return [
         'index' => env('WEAVIATE_INDEX', 'Item'),
     ],
 
+    'dam' => [
+        'url' => env('DAM_URL', 'https://mdo.mkg-hamburg.de/CIP/metadata/search/MKG/'),
+        'username' => env('DAM_USERNAME'),
+        'password' => env('DAM_PASSWORD'),
+    ],
+
     'vimeo' => [
         'api' => env('VIMEO_API', 'https://api.vimeo.com'),
         'access_token' => env('VIMEO_ACCESS_TOKEN'),
