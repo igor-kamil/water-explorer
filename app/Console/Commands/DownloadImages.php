@@ -11,7 +11,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 
 class DownloadImages extends Command
 {
-    protected $signature = 'download:images';
+    protected $signature = 'download:images {--limit=100}';
     protected $description = 'Download images for all items';
 
     public function __construct()
@@ -25,7 +25,7 @@ class DownloadImages extends Command
             Storage::makeDirectory('images');
         }
         
-        $items = Item::whereNotNull('asset_id')->get();
+        $items = Item::whereNotNull('asset_id')->whereNull('tiny_placeholder')->limit($this->option('limit'))->get();
         $totalItems = $items->count();
 
         $progressBar = $this->output->createProgressBar($totalItems);
@@ -35,7 +35,9 @@ class DownloadImages extends Command
             // $imageUrl = $item->getImageUrl();
             $imageUrl = 'https://mdo.mkg-hamburg.de/MDO/mediadelivery/rendition/' . $item->asset_id . '/-FJPG';
 
-            if (!$this->isImageDownloaded($imageUrl)) {
+            // if (!$this->isImageDownloaded($imageUrl)) {
+            $imagePath = storage_path("app/images/{$item->id}.jpg");
+            if (!file_exists($imagePath)) {
                 if ($this->downloadImage($imageUrl, $item->id)) {
                     // $this->info("Downloaded image for Item ID {$item->id}");
                 } else {

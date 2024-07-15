@@ -22,7 +22,7 @@ class FillAssets extends Command
      *
      * @var string
      */
-    protected $signature = 'fill:assets';
+    protected $signature = 'fill:assets {--limit=100}';
 
     /**
      * The console command description.
@@ -49,7 +49,7 @@ class FillAssets extends Command
     public function handle()
     {
         $client = new Client();
-        $items = Item::whereNull('asset_id')->get()->take(1000);
+        $items = Item::whereNull('asset_id')->limit($this->option('limit'))->get();
         $imported = 0;
 
         $progressBar = $this->output->createProgressBar($items->count());
@@ -61,10 +61,14 @@ class FillAssets extends Command
 
             ]);
 
-            $responseData = json_decode($response->getBody(), true)['items'];
+            $responseData = collect(json_decode($response->getBody(), true)['items']);
 
             if (!empty($responseData)) {
-                $hash = Arr::get($responseData, '0.{cc7f9f0e-6c0b-4143-9478-d44333ece2dc}');
+                $hash = $responseData->reject(function ($item) {
+                    // reject if the name does not end with .pdf or the size is less than 800
+                    return Str::endsWith($item['name'], '.pdf') || $item['{05f6f3f0-833a-45a0-ade4-8e48542f37ef}'] < 800;
+                })->sortByDesc('name')->values()->first()['{cc7f9f0e-6c0b-4143-9478-d44333ece2dc}'] ?? null;
+                // $hash = Arr::get($responseData, '0.{cc7f9f0e-6c0b-4143-9478-d44333ece2dc}');
                 $item->asset_id = $hash;
                 $item->save();
                 $imported++;
