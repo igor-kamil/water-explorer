@@ -78,10 +78,36 @@ Just seed the provided sample data using the command `php artisan db:seed`
 2. import assets data from DAM export by: `php artisan import:assets {file}` - check [ImportAssets.php](app/Console/Commands/ImportAssets.php) for details
 3. pair the items with their online collection url by: `php artisan import:urls {file}` - check [ImportUrls.php](app/Console/Commands/ImportUrls.php) for details
 
+## Dating
+
+After import - to achieve functionality for moving younger/older, this app requires calculated `year` attribute.
+You can get it by 
+
+```
+php artisan  app:calculate-year
+```
+
 ## Images
 
 1. download the images for imported MK&G items by: `php artisan download:images`
 2. generate tiny placeholder images for items by: `php artisan generate:tiny-placeholders`
+
+### Generate thumbs:
+
+```
+mogrify -path ./storage/app/images_thumb -background black -gravity center  -resize 244x244 ./storage/app/images/*.jpg
+
+mogrify -path images_thumb -background black -gravity center  -resize 244x244 images/*.jpg
+
+php -d memory_limit=512M artisan weaviate:add-data
+```
+
+### convert fullsize images to 1200px:
+
+```
+mogrify -path ./storage/app/images -resize '1200x1200>' ./storage/app/images_full/*.jpg
+```
+
 
 ## Weaviate db setup
 
