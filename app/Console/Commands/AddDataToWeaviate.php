@@ -33,7 +33,7 @@ class AddDataToWeaviate extends Command
             "valueString" => "x"
         ]);
 
-        $itemsQuery = Item::whereNotNull('asset_id');
+        $itemsQuery = Item::whereNotNull('asset_id')->whereNotNull('tiny_placeholder');
         $totalItems = $itemsQuery->count();
 
         $progressBar = $this->output->createProgressBar($totalItems);
