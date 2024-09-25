@@ -8,6 +8,9 @@ Developed by [Igor Rjabinin](https://github.com/igor-kamil/) and [Philo van K
 
 Funded by the [Digital Culture Programme](https://www.kulturstiftung-des-bundes.de/en/programmes_projects/film_and_new_media/detail/digital_culture.html) of the [Kulturstiftung des Bundes](https://www.kulturstiftung-des-bundes.de/en) (German Federal Cultural Foundation). Funded by the [Beauftragte der Bundesregierung für Kultur und Medien ](https://www.bundesregierung.de/breg-de/bundesregierung/bundeskanzleramt/staatsministerin-fuer-kultur-und-medien)(Federal Government Commissioner for Culture and the Media).
 
+![water-explorer](https://github.com/user-attachments/assets/8a184d9c-8028-4698-b6fb-e422088318bc)
+
+
 ## Development
 
 This software is built with the [Laravel framework](http://laravel.com/).
